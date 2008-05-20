@@ -1,0 +1,30 @@
+<Strategies>
+	<CountingStrategies>
+		<CountingStrategy>
+			<DisplayName>Basic Counting Strategy</DisplayName>
+			<ClassName>BasicCountingStrategy</ClassName>
+		</CountingStrategy>
+	</CountingStrategies>
+	<PlayingStrategies>
+		<PlayingStrategy>
+			<DisplayName>Basic Playing Strategy</DisplayName>
+			<ClassName>BasicPlayingStrategy</ClassName>
+		</PlayingStrategy>
+		<PlayingStrategy>
+			<DisplayName>Dealer Playing Strategy</DisplayName>
+			<ClassName>DealerPlayingStrategy</ClassName>
+		</PlayingStrategy>
+	</PlayingStrategies>
+	<BettingStrategies>
+		<BettingStrategy>
+			<DisplayName>Basic Betting Strategy</DisplayName>
+			<ClassName>BasicBettingStrategy</ClassName>
+		</BettingStrategy>
+	</BettingStrategies>\
+	<HouseRules>
+		<HouseRule>
+			<DisplayName>Basic House Rules</DisplayName>
+			<ClassName>BasicHouseRules</ClassName>
+		</HouseRule>
+	</HouseRules>
+</Strategies>
