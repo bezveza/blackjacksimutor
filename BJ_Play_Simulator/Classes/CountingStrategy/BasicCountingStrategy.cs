@@ -26,8 +26,8 @@ public class BasicCountingStrategy : ICountingStrategy
                 CountIncrementer = 0;
                 break;
         }
-        int decksRemaining =
-            (int)Math.Min(Math.Floor((double)(CardsRemaining) / 52)
+        double decksRemaining =
+            Math.Max(Math.Floor((double)(CardsRemaining) / 52)
                           ,(double)1);
         mCountingObjects["RunningCount"] = (int)mCountingObjects["RunningCount"] + CountIncrementer;
         mCountingObjects["TrueCount"] = (double)((int)mCountingObjects["RunningCount"] / decksRemaining);

@@ -1,11 +1,11 @@
 using System;
 
-
 public class Shoe
 {
     //members
     private int mIndex = 0;
     private Card[] mCards;
+    private CryptoStongRandom mRandomNumberGenerator;
 
     //properties
     public int CardsRemaining
@@ -16,10 +16,12 @@ public class Shoe
         }
     }
     //constructors
-    public Shoe(int NumberOfDecks)
+    public Shoe(int NumberOfDecks, CryptoStongRandom RandomNumberGenerator)
     {
         if (NumberOfDecks < 1) 
             throw new Exception("Cannot create shoe, number of decks must be positive");
+
+        mRandomNumberGenerator = RandomNumberGenerator;
 
         mCards = new Card[NumberOfDecks * 52];
         int currArrayPos = 0;
@@ -56,13 +58,13 @@ public class Shoe
     {
      //see http://en.wikipedia.org/wiki/Fisher-Yates_shuffle for implementaion details
 
-        Random rand = new Random();
+
         int n = mCards.Length;
         int k;
         Card c;
         while (n > 1)
         {
-            k = rand.Next(0, n);
+            k = mRandomNumberGenerator.Next(n);
             n--;
             c = mCards[n];
             mCards[n] = mCards[k];
@@ -81,10 +83,3 @@ public class Shoe
 
 }
 
-public class CryptoRandom : Random
-{
-    public override int Next(int minValue, int maxValue)
-    {
-        return 1;
-    }
-}

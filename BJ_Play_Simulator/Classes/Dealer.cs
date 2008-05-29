@@ -7,6 +7,7 @@ public class Dealer
     private Shoe mShoe;
     private GameSettings mGameSetting;
     private Card HouseUpCard;
+    private CryptoStongRandom mRandomNumberGenerator;
     public event CardPlayedDelegate CardPlayed;
     public event ShoeReloadedDelegate ShoeReloaded;
     //properties
@@ -16,7 +17,9 @@ public class Dealer
     public Dealer(GameSettings GameSetting)
     {
         mGameSetting = GameSetting;
-        mShoe = new Shoe(mGameSetting.DecksInShoe);
+        
+        mRandomNumberGenerator = new CryptoStongRandom();
+        mShoe = new Shoe(mGameSetting.DecksInShoe,mRandomNumberGenerator);
     }
 
     public void PlayRound(House house,BettingPlayer[] Gamblers)
@@ -30,8 +33,8 @@ public class Dealer
         {
             foreach (BettingPlayer Gambler in Gamblers)
             {
-                if (Gambler.CurrentBettingHand.isBlackJack)
-                    Gambler.RecieveWinnings(Gambler.CurrentBettingHand.BetValue);
+                if (Gambler.CurrentHand.isBlackJack)
+                    Gambler.RecieveWinnings(Gambler.CurrentHand.BetValue);
             }
             CardPlayed(house.CurrentHand.Cards[0], mGameSetting, mShoe.CardsRemaining);
             ClearHands(house, Gamblers);
@@ -51,7 +54,7 @@ public class Dealer
         // if the count of cards remaining is under the reload threshhold, reload it and fire the event to notify players
         if (mShoe.CardsRemaining < (mGameSetting.ReloadShoeDeckCount * 52))
         {
-            mShoe = new Shoe(mGameSetting.DecksInShoe);
+            mShoe = new Shoe(mGameSetting.DecksInShoe,mRandomNumberGenerator);
             ShoeReloaded();
         }
     }
@@ -189,3 +192,6 @@ public class Dealer
         return c;
     }
 }
+
+
+

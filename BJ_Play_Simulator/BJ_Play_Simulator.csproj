@@ -48,6 +48,7 @@
     <Compile Include="Classes\BettingStrategy\IBettingStrategy.cs" />
     <Compile Include="Classes\Card.cs" />
     <Compile Include="Classes\BettingPlayer.cs" />
+    <Compile Include="Classes\CryptoStongRandom.cs" />
     <Compile Include="Classes\Dealer.cs" />
     <Compile Include="Classes\HouseRules\BasicHouseRules.cs" />
     <Compile Include="Classes\HouseRules\IHouseRules.cs" />
