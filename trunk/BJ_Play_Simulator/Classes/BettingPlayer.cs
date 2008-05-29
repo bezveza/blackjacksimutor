@@ -31,13 +31,6 @@ using System.Collections;
             return (BettingHand)mHands[mCurrentHandIndex];
         }
     }
-    public BettingHand CurrentBettingHand
-    {
-        get
-        {
-            return (BettingHand)mHands[mCurrentHandIndex];
-        }
-    }
      public BankRoll bankRoll
      {
          get
@@ -63,7 +56,11 @@ using System.Collections;
 
      public HandDecision DetermineNextMove(Card HouseUpCard)
      {
-         return mPlayingStrategy.DetermineNextMove(CurrentHand,HouseUpCard,mCountingStrategy.getCountingObjects());
+         bool AvailableBankRoll = (mCurrentBaseBet <= mBankRoll.Value);
+         return mPlayingStrategy.DetermineNextMove(CurrentHand,
+             HouseUpCard,
+             mCountingStrategy.getCountingObjects(),
+             AvailableBankRoll);
      }
 
     public void RegisterForDealerEvents(Dealer d)
@@ -108,6 +105,8 @@ using System.Collections;
     public void ClearHands()
     {
         mHands.Clear();
+        mCurrentBaseBet = 0;
+        mCurrentHandIndex = 0;
     }
     public void ReplaceHand(BettingHand ReplacingHand, BettingHand CurrentHand)
     {
@@ -123,7 +122,7 @@ using System.Collections;
     }
     public bool goToNextHand()
     {
-        if (mCurrentHandIndex + 1 < mHands.Count)
+        if (mCurrentHandIndex < mHands.Count - 1)
         {
             mCurrentHandIndex++;
             return true;

@@ -9,15 +9,19 @@ public class BasicBettingStrategy : IBettingStrategy
         ,Hashtable CountingObjects)
     {
         double trueCount = (double)CountingObjects["TrueCount"];
+        int bet;
         if (trueCount < 1)
-            return 10;
+            bet = 10;
         else if (trueCount < 2)
-            return 37;
+            bet = 37;
         else if (trueCount < 3)
-            return 64;
+            bet = 64;
         else if (trueCount < 4)
-            return 91;
+            bet = 91;
         else
-            return 120;
+            bet = 120;
+        if (bet > CurrentBankRoll)
+            bet = (int)Math.Floor(CurrentBankRoll);
+        return bet;
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Text;
 
 public class Hand
 {
@@ -93,6 +94,16 @@ public class Hand
     {
         if (mCards.Contains(c)) mCards.Remove(c);
         else throw new Exception("Cannot remove card.  Card doesn't belong to hand");
+    }
+
+    public override string ToString()
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (Card c in Cards)
+        {
+            sb.Append(c.ToString() + ',');
+        }
+        return sb.ToString();
     }
 }
 

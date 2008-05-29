@@ -18,7 +18,6 @@ namespace BJ_Play_Simulator
             InitializeComponent();
         }
 
-
         Dealer Casino;
         House house;
         GameSettings GameSetting;
@@ -58,8 +57,6 @@ namespace BJ_Play_Simulator
           //  Gambler.RegisterForDealerEvents(Casino);
            // Casino.PlayRound(ref House,ref Gambler);
         }
-
-
         private void LoadAvailableInterfaces()
         {
             XmlTextReader InterfaceReader = new XmlTextReader("Resources\\Interfaces.xml");
@@ -165,45 +162,77 @@ namespace BJ_Play_Simulator
                 return false;
             }
         }
-
+        private void ToggleSystemEnabled(bool enabled)
+        {
+            //if (enabled)
+               // this. = Cursors.WaitCursor;
+           // else
+             //   Cursor.Current = Cursors.Arrow;
+        }
         private void btn_Simulate_Click(object sender, EventArgs e)
         {
             if (ValidateFormInputs())
             {
-                //Create all players in the current simulation
-                BettingPlayer[] Gamblers = new BettingPlayer[0];
-                foreach (BettingPlayerControl bc in GamblerControls)
-               {
-                  if (bc.ActiveChecked)
-                  {
-                      Array.Resize(ref Gamblers, Gamblers.Length + 1);
-                      Gamblers[Gamblers.Length - 1] = bc.CreateBettingPlayer();
-                  }
-                }
-                if (Gamblers.Length > 0)
+                try
                 {
-                      LoadGameSetting();
-                      Casino = new Dealer(GameSetting);
+                    ToggleSystemEnabled(false);
+                    //Create all players in the current simulation
+                    BettingPlayer[] Gamblers = new BettingPlayer[0];
+                    foreach (BettingPlayerControl bc in GamblerControls)
+                    {
+                        if (bc.ActiveChecked)
+                        {
+                            Array.Resize(ref Gamblers, Gamblers.Length + 1);
+                            Gamblers[Gamblers.Length - 1] = bc.CreateBettingPlayer();
+                        }
+                    }
+                    if (Gamblers.Length > 0)
+                    {
+                        LoadGameSetting();
+                        Casino = new Dealer(GameSetting);
 
-                      foreach (BettingPlayer Gambler in Gamblers)
-                      {
-                          Gambler.RegisterForDealerEvents(Casino);
-                      }
+                        foreach (BettingPlayer Gambler in Gamblers)
+                        {
+                            Gambler.RegisterForDealerEvents(Casino);
+                        }
 
-                      IHouseRules IHR;
-                      Type t = Type.GetType(cmb_HouseRules.SelectedValue.ToString());
-                      IHR = (IHouseRules)Activator.CreateInstance(t);
-                      house = new House(IHR);
+                        IHouseRules IHR;
+                        Type t = Type.GetType(cmb_HouseRules.SelectedValue.ToString());
+                        IHR = (IHouseRules)Activator.CreateInstance(t);
+                        house = new House(IHR);
 
-                      for(int i = 0; i < GameSetting.BettingRounds; i++)
-                      {
-                          Casino.PlayRound(house,Gamblers);
-                      }
-                      UpdateBankrollDisplays();
-                  }
-                  else MessageBox.Show("Please select at least one player");
+                        for (int i = 0; i < GameSetting.BettingRounds; i++)
+                        {
+                            Casino.PlayRound(house, Gamblers);
+                            //check and see if the player is bankrupt
+                            foreach (BettingPlayer Gambler in Gamblers)
+                            {
+                                if (Gambler.bankRoll.Value < GameSetting.MinimumBet)
+                                    RemoveGamblerFromSim(ref Gamblers, Array.IndexOf(Gamblers, Gambler));
+                                if (Gamblers.Length == 0)
+                                    break;
+                            }
+                        }
+                        UpdateBankrollDisplays();
+                    }
+                    else MessageBox.Show("Please select at least one player");
 
+                }
+                finally
+                {
+                    ToggleSystemEnabled(true);
+                }
                 }
             }
+        private void RemoveGamblerFromSim(ref BettingPlayer[] arr, int index)
+        {
+            if(index < 0 || index >= arr.Length)
+                throw new Exception("Index out of Bounds");
+            for (int i = index; i < arr.Length - 1; i++ )
+            {
+                arr[i] = arr[i + 1];
+            }
+            Array.Resize(ref arr, arr.Length - 1);
+        }
       }
 }
