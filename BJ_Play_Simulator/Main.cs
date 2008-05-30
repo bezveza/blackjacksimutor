@@ -164,10 +164,22 @@ namespace BJ_Play_Simulator
         }
         private void ToggleSystemEnabled(bool enabled)
         {
-            //if (enabled)
-               // this. = Cursors.WaitCursor;
-           // else
-             //   Cursor.Current = Cursors.Arrow;
+            if (enabled)
+                this.Cursor = Cursors.Arrow;
+            else
+                this.Cursor = Cursors.WaitCursor;
+
+            lbl_working.Visible = !enabled;
+            lbl_roundCount.Visible = !enabled;
+               
+            
+            foreach(Control c in this.Controls)
+            {
+                if (c.Name != "lbl_working" && c.Name != "lbl_roundCount")
+                    c.Enabled = enabled;
+            }
+
+            this.Refresh();
         }
         private void btn_Simulate_Click(object sender, EventArgs e)
         {
@@ -201,8 +213,14 @@ namespace BJ_Play_Simulator
                         IHR = (IHouseRules)Activator.CreateInstance(t);
                         house = new House(IHR);
 
-                        for (int i = 0; i < GameSetting.BettingRounds; i++)
+                        for (int i = 1; i <= GameSetting.BettingRounds; i++)
                         {
+                            //give the user a rounds play count
+                            if (i % 2500 == 0 || i == GameSetting.BettingRounds)
+                            {
+                                lbl_roundCount.Text = i.ToString();
+                                lbl_roundCount.Refresh();
+                            }
                             Casino.PlayRound(house, Gamblers);
                             //check and see if the player is bankrupt
                             foreach (BettingPlayer Gambler in Gamblers)
@@ -221,6 +239,7 @@ namespace BJ_Play_Simulator
                 finally
                 {
                     ToggleSystemEnabled(true);
+                    lbl_roundCount.Text = "0";
                 }
                 }
             }

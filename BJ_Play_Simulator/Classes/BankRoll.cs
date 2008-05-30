@@ -54,5 +54,7 @@ public class Bet
     {
         mCash = Cash;
     }
+
+    //methods
 }
 

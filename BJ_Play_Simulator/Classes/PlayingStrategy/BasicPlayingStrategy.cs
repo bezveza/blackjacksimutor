@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 
+
+//see http://en.wikipedia.com/wiki/blackjack for implementation details
 public class BasicPlayingStrategy : IPlayingStrategy
 {
     //members
@@ -90,23 +92,62 @@ public class BasicPlayingStrategy : IPlayingStrategy
         }
 
     }
-
     private void BuildBaseArray()
     {
         int i, j;
-        for (i = 5; i <= 9; i++)
+        for (i = 5; i <= 8; i++)
         {
             for (j = 1; j <= 10; j++)
             {
-                if ((j >= 4 && i >= 4)
-                    || (j == 3 && i == 6))
-                    SoftTotalDecision[i, j] = HandDecision.Double;
-                else SoftTotalDecision[i, j] = HandDecision.Hit;
+                BaseDecision[i, j] = HandDecision.Hit;
+            }
+        }
+        BaseDecision[9, 1] = HandDecision.Hit;
+        BaseDecision[9, 2] = HandDecision.Hit;
+        BaseDecision[9, 3] = HandDecision.Double;
+        BaseDecision[9, 4] = HandDecision.Double;
+        BaseDecision[9, 5] = HandDecision.Double;
+        BaseDecision[9, 6] = HandDecision.Double;
+        BaseDecision[9, 7] = HandDecision.Hit;
+        BaseDecision[9, 8] = HandDecision.Hit;
+        BaseDecision[9, 9] = HandDecision.Hit;
+        BaseDecision[9, 10] = HandDecision.Hit;
+
+        for (i = 10; i <= 11; i++)
+        {
+            for (j = 1; j <= 10; j++)
+            {
+                if(j==1 ||(i==10 && j == 10))
+                    BaseDecision[i, j] = HandDecision.Hit;
+                else
+                    BaseDecision[i, j] = HandDecision.Double;
+
             }
         }
 
-    }
+        for (i = 12; i <= 16; i++)
+        {
+            for (j = 1; j <= 10; j++)
+            {
+                if ((j >=4 && j<=6)
+                    || ((j == 2 || j == 3) && i >= 13))
+                    BaseDecision[i, j] = HandDecision.Stand;
+                else
+                    BaseDecision[i, j] = HandDecision.Hit;
 
+            }
+        }
+        for (i = 17; i <= 20; i++)
+        {
+            for (j = 1; j <= 10; j++)
+            {
+                BaseDecision[i, j] = HandDecision.Stand;
+            }
+        }
+
+
+
+    }
     private void BuildSplittingArray()
     {
         int i, j;
@@ -121,8 +162,8 @@ public class BasicPlayingStrategy : IPlayingStrategy
                 for (j = 1; j <= 10; j++)
                 {
                     if(j >=8 || j ==1)
-                        SplittingDecision[1, j] = HandDecision.Split;
-                    else SplittingDecision[1, j] = HandDecision.Hit;
+                        SplittingDecision[i, j] = HandDecision.Hit;
+                    else SplittingDecision[i, j] = HandDecision.Split;
                 }
             }
         }

@@ -3,11 +3,18 @@ using System.Security.Cryptography;
 
 public class CryptoStongRandom
 {
+    //members
     RNGCryptoServiceProvider RNG;
+
+    //properties
+
+    //contstructors
     public CryptoStongRandom()
     {
         RNG = new RNGCryptoServiceProvider();
     }
+
+    //methods
     public int Next(int maxValue)
     {
         Byte[] randBytes = new Byte[4];

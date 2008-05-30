@@ -7,8 +7,7 @@ public class House
     private Hand mHand;
 
     //properties
-
-    public virtual Hand CurrentHand
+    public Hand CurrentHand
     {
          get
         {
