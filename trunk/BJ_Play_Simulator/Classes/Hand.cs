@@ -9,7 +9,6 @@ public class Hand
     int mHardTotal = 0;
 
     //properties
-
     public Card[] Cards
     {
         get
@@ -79,20 +78,28 @@ public class Hand
     }
 
     //methods
-    public void Add(Card c)
+    public void AddCard(Card c)
     {
         mCards.Add(c);
         mHardTotal += c.Value;
 
     }
-    public void Remove(int Index)
+    public void RemoveCard(int Index)
     {
-        if (Index >= 0 && Index < this.Count) mCards.RemoveAt(Index);
+        if (Index >= 0 && Index < mCards.Count)
+        {
+            mHardTotal -= ((Card)mCards[Index]).Value;
+            mCards.RemoveAt(Index);
+        }
         else throw new Exception("Cannot remove card.  Index out of bounds");
     }
-    public void Remove(Card c)
+    public void RemoveCard(Card c)
     {
-        if (mCards.Contains(c)) mCards.Remove(c);
+        if (mCards.Contains(c))
+        {
+            mCards.Remove(c);
+            mHardTotal -= c.Value;
+        }
         else throw new Exception("Cannot remove card.  Card doesn't belong to hand");
     }
 

@@ -41,6 +41,8 @@ namespace BJ_Play_Simulator
             this.txt_MinimumBet = new System.Windows.Forms.TextBox();
             this.lbl_HouseRules = new System.Windows.Forms.Label();
             this.cmb_HouseRules = new System.Windows.Forms.ComboBox();
+            this.lbl_working = new System.Windows.Forms.Label();
+            this.lbl_roundCount = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn_Simulate
@@ -156,9 +158,33 @@ namespace BJ_Play_Simulator
             this.cmb_HouseRules.Size = new System.Drawing.Size(145, 21);
             this.cmb_HouseRules.TabIndex = 12;
             // 
+            // lbl_working
+            // 
+            this.lbl_working.AutoSize = true;
+            this.lbl_working.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_working.Location = new System.Drawing.Point(293, 121);
+            this.lbl_working.Name = "lbl_working";
+            this.lbl_working.Size = new System.Drawing.Size(110, 26);
+            this.lbl_working.TabIndex = 13;
+            this.lbl_working.Text = "Working...";
+            this.lbl_working.Visible = false;
+            // 
+            // lbl_roundCount
+            // 
+            this.lbl_roundCount.AutoSize = true;
+            this.lbl_roundCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_roundCount.Location = new System.Drawing.Point(397, 121);
+            this.lbl_roundCount.Name = "lbl_roundCount";
+            this.lbl_roundCount.Size = new System.Drawing.Size(24, 26);
+            this.lbl_roundCount.TabIndex = 14;
+            this.lbl_roundCount.Text = "0";
+            this.lbl_roundCount.Visible = false;
+            // 
             // Main
             // 
             this.ClientSize = new System.Drawing.Size(496, 444);
+            this.Controls.Add(this.lbl_roundCount);
+            this.Controls.Add(this.lbl_working);
             this.Controls.Add(this.cmb_HouseRules);
             this.Controls.Add(this.lbl_HouseRules);
             this.Controls.Add(this.txt_MinimumBet);
@@ -197,6 +223,8 @@ namespace BJ_Play_Simulator
         private System.Windows.Forms.TextBox txt_MinimumBet;
         private System.Windows.Forms.Label lbl_HouseRules;
         private System.Windows.Forms.ComboBox cmb_HouseRules;
+        private System.Windows.Forms.Label lbl_working;
+        private System.Windows.Forms.Label lbl_roundCount;
 
     }
 }

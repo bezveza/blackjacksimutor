@@ -13,7 +13,6 @@ public class Dealer
     //properties
 
     //contructors
-
     public Dealer(GameSettings GameSetting)
     {
         mGameSetting = GameSetting;
@@ -22,6 +21,7 @@ public class Dealer
         mShoe = new Shoe(mGameSetting.DecksInShoe,mRandomNumberGenerator);
     }
 
+    //methods
     public void PlayRound(House house,BettingPlayer[] Gamblers)
 
     {
@@ -108,14 +108,14 @@ public class Dealer
             switch (HD)
             {
                 case HandDecision.Hit:
-                    p.CurrentHand.Add(DealCard());
+                    p.CurrentHand.AddCard(DealCard());
                     break;
                 case HandDecision.Split:
                     if (p.CurrentHand.Count > 2)
                         throw new Exception("Cannot split hand with more than 2 cards");
                     if (p.CurrentHand.GetType() != typeof(BettingHand))
                         throw new Exception("Cannot split non betting hand");
-                    else SplitHand((BettingPlayer)p);
+                    else SplitHand(p);
                     break;
                 case HandDecision.Double:
                     if (p.CurrentHand.Count > 2)
@@ -123,7 +123,7 @@ public class Dealer
                     if (p.CurrentHand.GetType() != typeof(BettingHand))
                         throw new Exception("Cannot double non betting hand");
                     (p.CurrentHand).DoubleBet(p.MakeSubsequentBet());
-                    p.CurrentHand.Add(DealCard());
+                    p.CurrentHand.AddCard(DealCard());
                     break;
             }
         } while (HD != HandDecision.Stand &&
@@ -139,7 +139,7 @@ public class Dealer
             switch (HD)
             {
                 case HandDecision.Hit:
-                    h.CurrentHand.Add(DealCard());
+                    h.CurrentHand.AddCard(DealCard());
                     break;
                 case HandDecision.Split:
                         throw new Exception("House Cannot Split Hand");
@@ -167,7 +167,7 @@ public class Dealer
                     Gambler.RecieveWinnings(bh.BetValue);
                 //check for player win
                 else if (HouseHand.SoftTotal < bh.SoftTotal && !bh.isBusted)
-                    Gambler.RecieveWinnings(bh.BetValue);
+                    Gambler.RecieveWinnings(bh.BetValue * 2);
             }
         }
     }
@@ -175,8 +175,8 @@ public class Dealer
     {
         Card c1 = p.CurrentHand.Cards[0];
         Card c2 = p.CurrentHand.Cards[1];
-        p.CurrentHand.Remove(c2);
-        p.CurrentHand.Add(DealCard());
+        p.CurrentHand.RemoveCard(c2);
+        p.CurrentHand.AddCard(DealCard());
 
         BettingHand b = new BettingHand(c2, DealCard(), p.MakeSubsequentBet());
         p.AddHand(b);

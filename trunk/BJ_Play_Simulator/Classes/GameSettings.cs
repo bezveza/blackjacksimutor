@@ -1,6 +1,6 @@
 using System;
 
-public class GameSettings
+public struct GameSettings
 {
     //members
     private int mDecksInShoe;
