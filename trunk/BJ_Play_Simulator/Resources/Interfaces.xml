@@ -10,10 +10,6 @@
 			<DisplayName>Basic Playing Strategy</DisplayName>
 			<ClassName>BasicPlayingStrategy</ClassName>
 		</PlayingStrategy>
-		<PlayingStrategy>
-			<DisplayName>Dealer Playing Strategy</DisplayName>
-			<ClassName>DealerPlayingStrategy</ClassName>
-		</PlayingStrategy>
 	</PlayingStrategies>
 	<BettingStrategies>
 		<BettingStrategy>
