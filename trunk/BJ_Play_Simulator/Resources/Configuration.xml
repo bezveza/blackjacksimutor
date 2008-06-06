@@ -12,11 +12,11 @@
 		<DefaultPlayingRound>100000</DefaultPlayingRound>	
 	</PlayingRound>
 	<Player>
-		<DefaultBankroll>100000</DefaultBankroll>
+		<DefaultBankroll>10000</DefaultBankroll>
 		<DefaultActive>1</DefaultActive><!--Bool, 0 = Active !0 = InActive-->
 	</Player>
 	<Betting>
 		<DefaultMinimumBet>10</DefaultMinimumBet>
-		<DefaultMaximumBet>500</DefaultMaximumBet>
+		<DefaultMaximumBet>250</DefaultMaximumBet>
 	</Betting>
 </Configs>
