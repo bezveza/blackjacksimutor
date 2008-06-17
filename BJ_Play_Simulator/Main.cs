@@ -188,30 +188,30 @@ namespace BJ_Play_Simulator
                 try
                 {
                     ToggleSystemEnabled(false);
-                    //Create all players in the current simulation
-                    BettingPlayer[] Gamblers = new BettingPlayer[0];
+                    IHouseRules IHR;
+                    Type t = Type.GetType(cmb_HouseRules.SelectedValue.ToString());
+                    IHR = (IHouseRules)Activator.CreateInstance(t);
+                    house = new House(IHR);
+
+                    Table table = new Table(house);
                     foreach (BettingPlayerControl bc in GamblerControls)
                     {
                         if (bc.ActiveChecked)
                         {
-                            Array.Resize(ref Gamblers, Gamblers.Length + 1);
-                            Gamblers[Gamblers.Length - 1] = bc.CreateBettingPlayer();
+                            table.addGambler(bc.CreateBettingPlayer());
                         }
                     }
-                    if (Gamblers.Length > 0)
+                    if (table.Gamblers.Length > 0)
                     {
                         LoadGameSetting();
                         Casino = new Dealer(GameSetting);
 
-                        foreach (BettingPlayer Gambler in Gamblers)
+                        foreach (BettingPlayer Gambler in table.Gamblers)
                         {
                             Gambler.RegisterForDealerEvents(Casino);
                         }
 
-                        IHouseRules IHR;
-                        Type t = Type.GetType(cmb_HouseRules.SelectedValue.ToString());
-                        IHR = (IHouseRules)Activator.CreateInstance(t);
-                        house = new House(IHR);
+
 
                         for (int i = 1; i <= GameSetting.BettingRounds; i++)
                         {
@@ -221,15 +221,8 @@ namespace BJ_Play_Simulator
                                 lbl_roundCount.Text = i.ToString();
                                 lbl_roundCount.Refresh();
                             }
-                            Casino.PlayRound(house, Gamblers);
-                            //check and see if the player is bankrupt
-                            foreach (BettingPlayer Gambler in Gamblers)
-                            {
-                                if (Gambler.bankRoll.Value < GameSetting.MinimumBet)
-                                    RemoveGamblerFromSim(ref Gamblers, Array.IndexOf(Gamblers, Gambler));
-                                if (Gamblers.Length == 0)
-                                    break;
-                            }
+                            Casino.PlayRound(table);
+                            table.RemoveBankruptPlayers(GameSetting.MinimumBet);
                         }
                         UpdateBankrollDisplays();
                     }
@@ -243,15 +236,5 @@ namespace BJ_Play_Simulator
                 }
                 }
             }
-        private void RemoveGamblerFromSim(ref BettingPlayer[] arr, int index)
-        {
-            if(index < 0 || index >= arr.Length)
-                throw new Exception("Index out of Bounds");
-            for (int i = index; i < arr.Length - 1; i++ )
-            {
-                arr[i] = arr[i + 1];
-            }
-            Array.Resize(ref arr, arr.Length - 1);
-        }
       }
 }
