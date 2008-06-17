@@ -22,32 +22,32 @@ public class Dealer
     }
 
     //methods
-    public void PlayRound(House house,BettingPlayer[] Gamblers)
+    public void PlayRound(Table table)
 
     {
         CheckForShoeReload();
-        DealInitialCards(house,Gamblers);
+        DealInitialCards(table);
         
         //check for House BlackJack, "push" for any player also with blackjack
-        if (house.CurrentHand.isBlackJack)
+        if (table.house.CurrentHand.isBlackJack)
         {
-            foreach (BettingPlayer Gambler in Gamblers)
+            foreach (BettingPlayer Gambler in table.Gamblers)
             {
                 if (Gambler.CurrentHand.isBlackJack)
                     Gambler.RecieveWinnings(Gambler.CurrentHand.BetValue);
             }
-            CardPlayed(house.CurrentHand.Cards[0], mGameSetting, mShoe.CardsRemaining);
-            ClearHands(house, Gamblers);
+            CardPlayed(table.house.CurrentHand.Cards[0], mGameSetting, mShoe.CardsRemaining);
+            ClearHands(table);
             return;
         }
-        playBettingHands(Gamblers);
-        playHouseHand(house);
-        DisburseWinnings(house.CurrentHand, Gamblers);
+        playBettingHands(table.Gamblers);
+        playHouseHand(table.house);
+        DisburseWinnings(table.house.CurrentHand, table.Gamblers);
         
 
         //Allow everyone to add house "down" card to the count
-        CardPlayed(house.CurrentHand.Cards[0], mGameSetting, mShoe.CardsRemaining);
-        ClearHands(house, Gamblers);
+        CardPlayed(table.house.CurrentHand.Cards[0], mGameSetting, mShoe.CardsRemaining);
+        ClearHands(table);
     }
     private void CheckForShoeReload()
     {
@@ -58,18 +58,18 @@ public class Dealer
             ShoeReloaded();
         }
     }
-    private void DealInitialCards(House house,BettingPlayer[] Gamblers)
+    private void DealInitialCards(Table table)
     {
         /*
         for the house hand, the first card is not available until after the round
         */
         Hand h = new Hand(mShoe.GetNextCard(), DealCard());
-        house.AddHand(h);
-        HouseUpCard = house.CurrentHand.Cards[1];
+        table.house.AddHand(h);
+        HouseUpCard = table.house.CurrentHand.Cards[1];
 
         Bet b;
         BettingHand bettingHand;
-        foreach (BettingPlayer Gambler in Gamblers)
+        foreach (BettingPlayer Gambler in table.Gamblers)
         {
             b = Gambler.MakeFirstBet(mGameSetting,mShoe.CardsRemaining);
             if (b.Value > mGameSetting.MaximumBet || b.Value < mGameSetting.MinimumBet)
@@ -89,15 +89,15 @@ public class Dealer
             } while (Gambler.goToNextHand());
         }
     }
-    private void ClearHands(House house, BettingPlayer[] Gamblers)
+    private void ClearHands(Table table)
     {
         //clear the gambler hands
-        foreach (BettingPlayer Gambler in Gamblers)
+        foreach (BettingPlayer Gambler in table.Gamblers)
         {
             Gambler.ClearHands();
         }
         //clear the house's hand
-        house.ClearHands();
+        table.house.ClearHands();
     }
     private void playBettingHand(BettingPlayer p,Card HouseUpCard)
         {

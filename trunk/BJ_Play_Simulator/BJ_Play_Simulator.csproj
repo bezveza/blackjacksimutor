@@ -60,6 +60,7 @@
     <Compile Include="Classes\Hand.cs" />
     <Compile Include="Classes\CountingStrategy\ICountingStrategy.cs" />
     <Compile Include="Classes\Shoe.cs" />
+    <Compile Include="Classes\Table.cs" />
     <Compile Include="Classes\ValidationHelpers.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
