@@ -80,14 +80,19 @@ using System.Collections;
             ,mCountingStrategy.getCountingObjects());
         return mBankRoll.getBet(mCurrentBaseBet);
     }
-    public Bet MakeSubsequentBet()
+     public Bet MakeSubsequentBet()
     {
         return mBankRoll.getBet(mCurrentBaseBet);
     }
-    public void RecieveWinnings(double Cash)
+     public void RecieveWinnings(double Cash)
     {
         mBankRoll.AddCash(Cash);
     }
+     public void ReloadBankRoll(double Cash)
+     {
+         mBankRoll = new BankRoll(Cash);
+     }
+
 
     private void UpdateCount(Card c,GameSettings GameSetting,int CardsRemaining)
     {

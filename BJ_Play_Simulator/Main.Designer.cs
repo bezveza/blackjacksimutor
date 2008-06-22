@@ -43,6 +43,7 @@ namespace BJ_Play_Simulator
             this.cmb_HouseRules = new System.Windows.Forms.ComboBox();
             this.lbl_working = new System.Windows.Forms.Label();
             this.lbl_roundCount = new System.Windows.Forms.Label();
+            this.lbl_ReloadBankrolls = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_Simulate
@@ -162,7 +163,7 @@ namespace BJ_Play_Simulator
             // 
             this.lbl_working.AutoSize = true;
             this.lbl_working.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_working.Location = new System.Drawing.Point(293, 121);
+            this.lbl_working.Location = new System.Drawing.Point(293, 143);
             this.lbl_working.Name = "lbl_working";
             this.lbl_working.Size = new System.Drawing.Size(110, 26);
             this.lbl_working.TabIndex = 13;
@@ -173,16 +174,27 @@ namespace BJ_Play_Simulator
             // 
             this.lbl_roundCount.AutoSize = true;
             this.lbl_roundCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_roundCount.Location = new System.Drawing.Point(397, 121);
+            this.lbl_roundCount.Location = new System.Drawing.Point(397, 143);
             this.lbl_roundCount.Name = "lbl_roundCount";
             this.lbl_roundCount.Size = new System.Drawing.Size(24, 26);
             this.lbl_roundCount.TabIndex = 14;
             this.lbl_roundCount.Text = "0";
             this.lbl_roundCount.Visible = false;
             // 
+            // lbl_ReloadBankrolls
+            // 
+            this.lbl_ReloadBankrolls.Location = new System.Drawing.Point(298, 114);
+            this.lbl_ReloadBankrolls.Name = "lbl_ReloadBankrolls";
+            this.lbl_ReloadBankrolls.Size = new System.Drawing.Size(181, 23);
+            this.lbl_ReloadBankrolls.TabIndex = 15;
+            this.lbl_ReloadBankrolls.Text = "Reload Bankrolls";
+            this.lbl_ReloadBankrolls.UseVisualStyleBackColor = true;
+            this.lbl_ReloadBankrolls.Click += new System.EventHandler(this.lbl_ReloadBankrolls_Click);
+            // 
             // Main
             // 
             this.ClientSize = new System.Drawing.Size(496, 444);
+            this.Controls.Add(this.lbl_ReloadBankrolls);
             this.Controls.Add(this.lbl_roundCount);
             this.Controls.Add(this.lbl_working);
             this.Controls.Add(this.cmb_HouseRules);
@@ -225,6 +237,7 @@ namespace BJ_Play_Simulator
         private System.Windows.Forms.ComboBox cmb_HouseRules;
         private System.Windows.Forms.Label lbl_working;
         private System.Windows.Forms.Label lbl_roundCount;
+        private System.Windows.Forms.Button lbl_ReloadBankrolls;
 
     }
 }

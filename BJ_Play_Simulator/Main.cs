@@ -236,5 +236,13 @@ namespace BJ_Play_Simulator
                 }
                 }
             }
+
+        private void lbl_ReloadBankrolls_Click(object sender, EventArgs e)
+        {
+            foreach (BettingPlayerControl BC in GamblerControls)
+            {
+                BC.ResetDefaultBankroll();
+            }
+        }
       }
 }

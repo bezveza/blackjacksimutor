@@ -13,6 +13,7 @@ namespace BJ_Play_Simulator
     {
         private BettingPlayer Gambler;
         public bool ActiveChecked;
+        private int initialBankRoll;
 
         public BettingPlayerControl(bool Active, int bankroll,string playerName)
         {
@@ -20,6 +21,7 @@ namespace BJ_Play_Simulator
             chb_Active.Checked = Active;
             ActiveChecked = Active;
             txt_Bankroll.Text = bankroll.ToString();
+            initialBankRoll = bankroll;
             lbl_playerName.Text = playerName;
         }
 
@@ -53,7 +55,6 @@ namespace BJ_Play_Simulator
             cmb_count.DisplayMember = "DisplayName";
             cmb_count.ValueMember = "ClassName";
         }
-
         public BettingPlayer CreateBettingPlayer()
         {
             IBettingStrategy IBS;
@@ -76,6 +77,12 @@ namespace BJ_Play_Simulator
         {
             if (Gambler != null)
                 txt_Bankroll.Text = Gambler.bankRoll.Value.ToString();
+        }
+        public void ResetDefaultBankroll()
+        {
+            txt_Bankroll.Text = initialBankRoll.ToString();
+            if (Gambler != null)
+                Gambler.ReloadBankRoll((double)initialBankRoll);
         }
     }
 }
