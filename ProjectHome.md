@@ -1,0 +1,3 @@
+Blackjack Simulator is a project that provides a framework to simulate the playing of large numbers of blackjack hands.   Interfaces are available to implement strategies for hand decisions (hit, stay, split, double down), betting, card counting, and dealer rules.
+
+The goal is to allow developers to create and test blackjack playing strategies that will gain the maximum advantage over the house (whether or not each strategy would be feasible to use in a real life setting).
